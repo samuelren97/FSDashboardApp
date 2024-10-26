@@ -132,7 +132,8 @@ fun getDummySimData(): SimData {
                 ias = 150,
                 gs = 204,
                 tas = 204,
-            )
+            ),
+            bar = 29.92f
         )
     )
 }
