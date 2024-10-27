@@ -22,14 +22,18 @@ import androidx.navigation.compose.dialog
 import com.shunta.fsdashboard.composables.aircraftinfo.AircraftInfo
 import com.shunta.fsdashboard.composables.dialogs.ErrorMessageDialog
 import com.shunta.fsdashboard.composables.dialogs.TextInputDialog
+import com.shunta.fsdashboard.composables.dialogs.TextInputInstance
 import com.shunta.fsdashboard.composables.radio.Radios
+import com.shunta.fsdashboard.composables.settings.Settings
 import com.shunta.fsdashboard.models.ErrorInstance
 import com.shunta.fsdashboard.models.SimData
 import com.shunta.fsdashboard.networking.WebSocketManager
 import kotlinx.coroutines.launch
 
 const val ROUTE_ERROR = "errorDialog"
+const val ROUTE_TEXT_INPUT = "textInputDialog"
 const val ROUTE_RADIO_SCREEN = "radioScreen"
+const val ROUTE_SETTINGS_SCREEN ="settingsScreen"
 const val ROUTE_CONNECTION_ERROR_DIALOG = "connectionErrorDialog"
 const val ROUTE_AIRCRAFT_INFO_SCREEN = "aircraftInfoScreen"
 const val ROUTE_LOADING_SPINNER = "loadingSpinnerDialog"
@@ -94,6 +98,13 @@ fun Navigation(modifier: Modifier, navController: NavHostController) {
             }
         }
 
+        composable(ROUTE_SETTINGS_SCREEN) {
+            currentRoute = ROUTE_SETTINGS_SCREEN
+            Column (modifier = modifier.verticalScroll(rememberScrollState())) {
+                Settings(navController)
+            }
+        }
+
         dialog(ROUTE_LOADING_SPINNER) {
             currentRoute = ROUTE_LOADING_SPINNER
             CircularProgressIndicator(
@@ -116,6 +127,21 @@ fun Navigation(modifier: Modifier, navController: NavHostController) {
                 "An error occurred while trying to connect to the server",
                 onDismiss,
                 modifier
+            )
+        }
+
+        dialog(
+            ROUTE_TEXT_INPUT
+        ) {
+            currentRoute = ROUTE_TEXT_INPUT
+            val onDismiss: () -> Unit = {
+                navController.popBackStack()
+            }
+
+            TextInputDialog(
+                TextInputInstance.message,
+                TextInputInstance.onOkClick,
+                onDismiss = onDismiss,
             )
         }
 

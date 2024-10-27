@@ -16,4 +16,11 @@ class Navigator (private val navController: NavHostController) {
             navController.navigate(ROUTE_RADIO_SCREEN)
         }
     }
+
+    fun navigateSettings() {
+        if (currentRoute != ROUTE_SETTINGS_SCREEN) {
+            navController.popBackStack()
+            navController.navigate(ROUTE_SETTINGS_SCREEN)
+        }
+    }
 }

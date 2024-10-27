@@ -81,6 +81,17 @@ class MainActivity : ComponentActivity() {
                                 toggleDrawer(scope, drawerState)
                                 navigator.navigateRadio()
                             }
+                            NavItem(
+                                painter =
+                                    painterResource(R.drawable.baseline_settings_24),
+                                contentDescription = "settings gear",
+                                labelText = "Settings",
+                                selected = selectedRoute == ROUTE_SETTINGS_SCREEN,
+                            ) {
+                                selectedRoute = ROUTE_SETTINGS_SCREEN
+                                toggleDrawer(scope, drawerState)
+                                navigator.navigateSettings()
+                            }
                         }
                     }
                 ) {
