@@ -4,6 +4,7 @@
 package com.shunta.fsdashboard.composables.generics
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -31,6 +32,7 @@ fun Gauge(
 
     val meterValue = getMeterValue(inputValue)
     Box(modifier = Modifier.size(sizeModifier.dp)) {
+        val isDark = isSystemInDarkTheme()
         Canvas(modifier = Modifier.fillMaxSize()) {
             val sweepAngle = 240f
             val fillSwipeAngle = (meterValue / 100f) * sweepAngle
@@ -38,6 +40,11 @@ fun Gauge(
             val width = size.width
             val startAngle = 150f
             val arcHeight = height - 20.dp.toPx()
+
+            var needleColor = Color.Black
+            if (isDark) {
+                needleColor = Color.Gray
+            }
 
             drawArc(
                 color = trackColor,
@@ -59,7 +66,7 @@ fun Gauge(
                 style = Stroke(width = (sizeModifier * 3f) / 12f, cap = StrokeCap.Round)
             )
             val centerOffset = Offset(width / 2f, height / 2.09f)
-            drawCircle(Color.Black, (sizeModifier * 1.8f) / 12f, centerOffset)
+            drawCircle(needleColor, (sizeModifier * 1.8f) / 12f, centerOffset)
 
             // Calculate needle angle based on inputValue
             val needleAngle = (meterValue / 100f) * sweepAngle + startAngle
@@ -97,7 +104,7 @@ fun Gauge(
             }
 
             drawPath(
-                color = Color.Black,
+                color = needleColor,
                 path = needlePath
             )
         }

@@ -1,6 +1,7 @@
 package com.shunta.fsdashboard.composables.generics
 
 import androidx.compose.foundation.Canvas
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -25,16 +26,23 @@ fun Compass(
     modifier: Modifier = Modifier.size(200.dp)
 ) {
     Column (modifier = modifier) {
+        var circleColor = Color.Black
+        var textColor = android.graphics.Color.BLACK
+        if (isSystemInDarkTheme()) {
+            circleColor = Color.White
+            textColor = android.graphics.Color.WHITE
+        }
         Text(
             "${String.format(Locale.US,"%.2f", angle)}°",
             modifier = Modifier.fillMaxWidth(),
             fontWeight = FontWeight(800),
             textAlign = TextAlign.End
         )
+
         Canvas(modifier = modifier.padding(10.dp)) {
             // Draw the outer circle
             drawCircle(
-                color = Color.Black,
+                color = circleColor,
                 style = Stroke(width = 8f)
             )
 
@@ -50,7 +58,7 @@ fun Compass(
             directions.zip(directionPositions).forEach { (label, position) ->
                 drawContext.canvas.nativeCanvas.apply {
                     drawText(label, position.x, position.y, android.graphics.Paint().apply {
-                        color = android.graphics.Color.BLACK
+                        color = textColor
                         textSize = 40f
                         textAlign = android.graphics.Paint.Align.CENTER
                     })
