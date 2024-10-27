@@ -33,6 +33,7 @@ import androidx.navigation.compose.rememberNavController
 import com.shunta.fsdashboard.composables.AppTopBar
 import com.shunta.fsdashboard.composables.NavItem
 import com.shunta.fsdashboard.models.AircraftInfoModel
+import com.shunta.fsdashboard.models.AutopilotModel
 import com.shunta.fsdashboard.models.Frequency
 import com.shunta.fsdashboard.models.SimData
 import com.shunta.fsdashboard.models.Speeds
@@ -143,7 +144,14 @@ fun getDummySimData(): SimData {
                 ias = 150,
                 tas = 204,
             ),
-            bar = 29.92f
+            bar = 29.92f,
+        ),
+        autopilot = AutopilotModel(
+            hdg = 0f,
+            alt = 0,
+            masterState = false,
+            navState = false,
+            flcState = false,
         )
     )
 }
