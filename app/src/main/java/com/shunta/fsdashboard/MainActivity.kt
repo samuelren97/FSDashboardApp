@@ -150,6 +150,7 @@ fun getDummySimData(): SimData {
             hdg = 0f,
             alt = 0,
             masterState = false,
+            hdgState = false,
             navState = false,
             flcState = false,
         )

@@ -6,6 +6,7 @@ data class AutopilotModel(
     @SerializedName("hdg")         val hdg: Float,
     @SerializedName("alt")         val alt: Int,
     @SerializedName("masterState") val masterState: Boolean,
+    @SerializedName("hdgState")    val hdgState: Boolean,
     @SerializedName("navState")    val navState: Boolean,
     @SerializedName("flcState")    val flcState: Boolean,
 )
