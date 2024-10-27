@@ -8,7 +8,9 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.Text
@@ -28,31 +30,25 @@ fun ErrorMessageDialog(
     Dialog(onDismissRequest = onDismiss) {
         Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .height(200.dp)
-                .padding(16.dp),
+                .fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
         ) {
-            Column(modifier = modifier.fillMaxSize(),
-                verticalArrangement = Arrangement.Center) {
+            Column(
+                modifier = modifier.fillMaxWidth()
+                    .padding(16.dp)
+                    .verticalScroll(rememberScrollState()),
+                horizontalAlignment = Alignment.CenterHorizontally
+                ) {
                 Text(
                     text = message,
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .wrapContentSize(Alignment.Center),
                     textAlign = TextAlign.Center,
                 )
 
-                Box(
-                    modifier = Modifier.fillMaxWidth()
-                        .padding(top = 8.dp),
-                    contentAlignment = Alignment.Center
+                Button(
+                    onClick = onDismiss,
+                    modifier = Modifier.padding(top = 8.dp)
                 ) {
-                    Button(
-                        onClick = onDismiss
-                    ) {
-                        Text("Ok")
-                    }
+                    Text("Ok")
                 }
             }
         }

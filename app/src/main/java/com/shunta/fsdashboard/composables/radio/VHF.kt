@@ -31,17 +31,18 @@ import com.shunta.fsdashboard.ui.theme.FSDashboardTheme
 
 @Composable
 fun VHF(
-    id: String,
+    id: Int,
+    name: String,
     active: String,
     standby: String,
-    onSwap: () -> Unit,
-    onSet: (freq: String) -> Unit,
+    onSwap: (Int) -> Unit,
+    onSet: (Int, String) -> Unit,
     defaultSetVal: String = "124.000"
 ) {
     var freqState by remember { mutableStateOf(defaultSetVal) }
 
     Column (modifier = Modifier.padding(bottom = 20.dp)) {
-        Headline2(text = id)
+        Headline2(text = name)
         Row(
             modifier = Modifier
                 .border(
@@ -72,7 +73,7 @@ fun VHF(
                     contentAlignment = Alignment.Center
                 ) {
                     Button(
-                        onClick = onSwap
+                        onClick = {onSwap(id)}
                     ) {
                         Icon(
                             Icons.AutoMirrored.Sharp.KeyboardArrowLeft,
@@ -91,7 +92,7 @@ fun VHF(
                 )
 
                 OutlinedButton(
-                    onClick = { onSet(freqState) },
+                    onClick = { onSet(id, freqState) },
                     modifier = Modifier.padding(top = 5.dp)
                 ) {
                     Text(text = "Set")
@@ -120,11 +121,12 @@ fun VHF(
 fun VHFPreview() {
     FSDashboardTheme {
         VHF(
-            id = "VHF 1",
+            id = 1,
+            name = "VHF 1",
             active = "124.000",
             standby = "118.650",
-            onSwap = {},
-            onSet = {_ -> },
+            onSwap = {_ -> },
+            onSet = {_, _ -> },
         )
     }
 }
