@@ -41,7 +41,7 @@ import com.shunta.fsdashboard.ui.theme.FSDashboardTheme
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-var wsServerAddress: String = "ws://192.168.2.12:8765"
+var wsServerAddress: String = "ws://10.0.2.2:8765"
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {

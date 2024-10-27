@@ -12,7 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
 object RetrofitInstance {
-    private const val API_BASE_URL: String = "http://192.168.2.12:5000/api/"
+    private const val API_BASE_URL: String = "http://10.0.2.2:5000/api/"
 
 
     private val okHttpClient by lazy {

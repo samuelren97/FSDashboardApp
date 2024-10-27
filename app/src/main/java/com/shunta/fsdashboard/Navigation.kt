@@ -52,13 +52,23 @@ fun Navigation(modifier: Modifier, navController: NavHostController) {
                 navController.navigate(START_ROUTE)
             }
         },
+        closingHandler = {reason: String ->
+            Log.e("WEBSOCKET", "Closing handler call: $reason")
+            if (currentRoute != ROUTE_CONNECTION_ERROR_DIALOG) {
+                coroutineScope.launch {
+                    navController.navigate(ROUTE_CONNECTION_ERROR_DIALOG)
+                }
+            }
+        },
         messageHandler = { text: String ->
             simData = SimData.fromJSON(text)
         },
         failureHandler = { reason : String ->
-            Log.e("WEBSOCKETS", reason)
-            coroutineScope.launch {
-                navController.navigate(ROUTE_CONNECTION_ERROR_DIALOG)
+            Log.e("WEBSOCKET", "onFailure called: $reason")
+            if (currentRoute != ROUTE_CONNECTION_ERROR_DIALOG) {
+                coroutineScope.launch {
+                    navController.navigate(ROUTE_CONNECTION_ERROR_DIALOG)
+                }
             }
         }
     )
@@ -94,8 +104,10 @@ fun Navigation(modifier: Modifier, navController: NavHostController) {
         }
 
         dialog(ROUTE_CONNECTION_ERROR_DIALOG) {
+            val lastRoute = currentRoute
             currentRoute = ROUTE_CONNECTION_ERROR_DIALOG
             val onDismiss: () -> Unit = {
+                currentRoute = lastRoute
                 WebSocketManager.connectWebSocket(wsServerAddress)
                 navController.popBackStack()
             }
@@ -119,18 +131,6 @@ fun Navigation(modifier: Modifier, navController: NavHostController) {
                 "${ErrorInstance.message}\n\n\n${ErrorInstance.t.toString()}",
                 onDismiss,
                 Modifier
-            )
-        }
-
-        dialog(ROUTE_CHANGE_SERVER_ADDRESS) {
-            currentRoute = ROUTE_CHANGE_SERVER_ADDRESS
-            TextInputDialog(
-                "Enter the new server address",
-                onButtonClick = { text ->
-                    wsServerAddress = text
-                    WebSocketManager.connectWebSocket(wsServerAddress)
-                },
-                onDismiss = { navController.popBackStack() }
             )
         }
     }

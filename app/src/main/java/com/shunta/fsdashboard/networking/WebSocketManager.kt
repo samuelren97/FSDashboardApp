@@ -14,15 +14,18 @@ object WebSocketManager {
     private lateinit var websocket: WebSocket
 
     private lateinit var oh: () -> Unit
+    private lateinit var cgh: (String) -> Unit
     private lateinit var mh: (String) -> Unit
     private lateinit var fh: (String) -> Unit
 
     fun init(
         openHandler: () -> Unit,
         messageHandler: (text: String) -> Unit,
+        closingHandler: (reason: String) -> Unit,
         failureHandler: (reason: String) -> Unit
     ) {
         oh = openHandler
+        cgh = closingHandler
         mh = messageHandler
         fh = failureHandler
     }
@@ -43,11 +46,11 @@ object WebSocketManager {
             }
 
             override fun onClosed(webSocket: WebSocket, code: Int, reason: String) {
-                Log.d("WEBSOCKET", reason)
+                Log.d("WEBSOCKET", "onClosed: $reason")
             }
 
             override fun onClosing(webSocket: WebSocket, code: Int, reason: String) {
-                Log.d("WEBSOCKET", reason)
+                cgh(reason)
             }
 
             override fun onFailure(webSocket: WebSocket, t: Throwable, response: Response?) {
