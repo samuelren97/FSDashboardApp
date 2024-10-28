@@ -23,4 +23,11 @@ class Navigator (private val navController: NavHostController) {
             navController.navigate(ROUTE_SETTINGS_SCREEN)
         }
     }
+
+    fun navigateAutopilot() {
+        if (currentRoute != ROUTE_AUTOPILOT_SCREEN) {
+            navController.popBackStack()
+            navController.navigate(ROUTE_AUTOPILOT_SCREEN)
+        }
+    }
 }

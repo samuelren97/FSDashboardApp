@@ -20,6 +20,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.dialog
 import com.shunta.fsdashboard.composables.aircraftinfo.AircraftInfo
+import com.shunta.fsdashboard.composables.autopilot.Autopilot
 import com.shunta.fsdashboard.composables.dialogs.ErrorMessageDialog
 import com.shunta.fsdashboard.composables.dialogs.TextInputDialog
 import com.shunta.fsdashboard.composables.dialogs.TextInputInstance
@@ -37,6 +38,7 @@ const val ROUTE_SETTINGS_SCREEN ="settingsScreen"
 const val ROUTE_CONNECTION_ERROR_DIALOG = "connectionErrorDialog"
 const val ROUTE_AIRCRAFT_INFO_SCREEN = "aircraftInfoScreen"
 const val ROUTE_LOADING_SPINNER = "loadingSpinnerDialog"
+const val ROUTE_AUTOPILOT_SCREEN = "autopilotScreen"
 
 // TEMP ROUTE
 const val ROUTE_CHANGE_SERVER_ADDRESS = "changeServerAddress"
@@ -102,6 +104,13 @@ fun Navigation(modifier: Modifier, navController: NavHostController) {
             currentRoute = ROUTE_SETTINGS_SCREEN
             Column (modifier = modifier.verticalScroll(rememberScrollState())) {
                 Settings(navController)
+            }
+        }
+
+        composable(ROUTE_AUTOPILOT_SCREEN) {
+            currentRoute = ROUTE_AUTOPILOT_SCREEN
+            Column(modifier = modifier.verticalScroll(rememberScrollState())) {
+                Autopilot(simData.autopilot)
             }
         }
 

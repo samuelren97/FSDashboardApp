@@ -84,6 +84,17 @@ class MainActivity : ComponentActivity() {
                             }
                             NavItem(
                                 painter =
+                                    painterResource(R.drawable.baseline_assistant_navigation_24),
+                                contentDescription = "navigation",
+                                labelText = "Autopilot",
+                                selected = selectedRoute == ROUTE_AUTOPILOT_SCREEN,
+                            ) {
+                                selectedRoute = ROUTE_AUTOPILOT_SCREEN
+                                toggleDrawer(scope, drawerState)
+                                navigator.navigateAutopilot()
+                            }
+                            NavItem(
+                                painter =
                                     painterResource(R.drawable.baseline_settings_24),
                                 contentDescription = "settings gear",
                                 labelText = "Settings",

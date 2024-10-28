@@ -6,9 +6,12 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.LinearProgressIndicator
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -59,9 +62,25 @@ fun AircraftInfo(
                     textAlign = TextAlign.Center
                 )
             }
+            HorizontalDivider(
+                modifier = Modifier.width(175.dp)
+                    .padding(8.dp),
+                color = Color.LightGray,
+            )
 
             Headline2("Heading")
             Compass(aircraftInfoModel.hdg, Modifier.size(175.dp))
+            HorizontalDivider(
+                modifier = Modifier.width(175.dp)
+                    .padding(8.dp),
+                color = Color.LightGray,
+            )
+
+            Headline2("Altimeter")
+            Text(
+                aircraftInfoModel.bar.toString(),
+                style = MaterialTheme.typography.displaySmall
+            )
         }
         Spacer(modifier = Modifier.padding(20.dp))
 
