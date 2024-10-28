@@ -35,5 +35,5 @@ interface APIService {
     fun putNav(): Call<ResponseBody>
 
     @PUT("ap/flc")
-    fun putFlc: Call<ResponseBody>
+    fun putFlc(): Call<ResponseBody>
 }
