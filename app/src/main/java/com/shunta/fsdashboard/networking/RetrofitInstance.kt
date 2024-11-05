@@ -42,28 +42,11 @@ object ApiClient {
         ifSuccess: () -> Unit,
         ifFail: (t: Throwable) -> Unit,
     ) {
-        val call = apiService.putSwap(id)
-
-        call.enqueue(object: Callback<ResponseBody> {
-            override fun onResponse(
-                call: Call<ResponseBody>,
-                response: retrofit2.Response<ResponseBody>
-            ) {
-                if (response.isSuccessful) {
-                    Log.d("RESTAPI", "Successful ${response.code()}")
-                    ifSuccess()
-                } else {
-                    Log.e("RESTAPI", "response unsuccessful ${response.code()}")
-                    val t: Exception = BadRequestException("Bad request while making call to API")
-                    ifFail(t)
-                }
-            }
-
-            override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.e("RESTAPI", t.message.toString())
-                ifFail(t)
-            }
-        })
+        call(
+            apiService.putSwap(id),
+            ifSuccess,
+            ifFail
+        )
     }
 
     fun setStandbyFreq(
@@ -72,11 +55,89 @@ object ApiClient {
         ifSuccess: () -> Unit,
         ifFail: (t: Throwable) -> Unit
     ) {
-        val call = apiService.putStandby(id, freq)
+        call(
+            apiService.putStandby(id, freq),
+            ifSuccess,
+            ifFail
+        )
+    }
 
+    fun setAPHeading(
+        hdg: Float,
+        ifSuccess: () -> Unit,
+        ifFail: (t: Throwable) -> Unit
+    ) {
+        call(
+            apiService.putHdg(hdg),
+            ifSuccess,
+            ifFail
+        )
+    }
+
+    fun setAPAlt(
+        alt: Int,
+        ifSuccess: () -> Unit,
+        ifFail: (t: Throwable) -> Unit
+    ) {
+        call(
+            apiService.putAlt(alt),
+            ifSuccess,
+            ifFail
+        )
+    }
+
+    fun toggleAPMaster(
+        ifSuccess: () -> Unit,
+        ifFail: (t: Throwable) -> Unit
+    ) {
+        call(
+            apiService.putMaster(),
+            ifSuccess,
+            ifFail
+        )
+    }
+
+    fun toggleAPHdg(
+        ifSuccess: () -> Unit,
+        ifFail: (t: Throwable) -> Unit
+    ) {
+        call(
+            apiService.postHdg(),
+            ifSuccess,
+            ifFail
+        )
+    }
+
+    fun toggleAPNav(
+        ifSuccess: () -> Unit,
+        ifFail: (t: Throwable) -> Unit
+    ) {
+        call(
+            apiService.putNav(),
+            ifSuccess,
+            ifFail
+        )
+    }
+
+    fun toggleAPFlc(
+        ifSuccess: () -> Unit,
+        ifFail: (t: Throwable) -> Unit,
+    ) {
+        call(
+            apiService.putFlc(),
+            ifSuccess,
+            ifFail
+        )
+    }
+
+    private fun call(
+        call: Call<ResponseBody>,
+        ifSuccess: () -> Unit,
+        ifFail: (t: Throwable) -> Unit
+    ){
         call.enqueue(object: Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
-                Log.d("RESTAPI", "Successfull call ${response.code()}")
+                Log.d("RESTAPI", "Successful call ${response.code()}")
                 if (response.isSuccessful) {
                     ifSuccess()
                 } else {
